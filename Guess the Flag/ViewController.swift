@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let array = ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
+    var countries = ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
     
     //used to embed navigation controller
     let myVC = UIViewController()
@@ -18,9 +18,12 @@ class ViewController: UIViewController {
     let button2 = UIButton()
     let button3 = UIButton()
     
+    var score = 0
+    var correctAnswer = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationController?.setNavigationBarHidden(false, animated: true)
         title = "ABC"
         navigationController?.navigationBar.tintColor = .black
         let navCon = UINavigationController(rootViewController: myVC)
@@ -70,9 +73,14 @@ extension ViewController {
     }
     
     func setImages() {
-        button1.setImage(UIImage(named: "estonia"), for: .normal)
-        button2.setImage(UIImage(named: "germany"), for: .normal)
-        button3.setImage(UIImage(named: "france"), for: .normal)
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+        
+        button1.setImage(UIImage(named: countries[0]), for: .normal)
+        button2.setImage(UIImage(named: countries[1]), for: .normal)
+        button3.setImage(UIImage(named: countries[2]), for: .normal)
+        
+        title = countries[correctAnswer].uppercased()
     }
     
     func setBorders() {
