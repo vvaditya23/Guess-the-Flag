@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .white
         setConstraints()
-        setImages()
+        askQuestion()
         setBorders()
     }
 }
@@ -72,7 +72,7 @@ extension ViewController {
         button3.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
-    func setImages() {
+    func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
         
