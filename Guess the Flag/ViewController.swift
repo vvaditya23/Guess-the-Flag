@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     let button1 = UIButton()
     let button2 = UIButton()
     let button3 = UIButton()
+    let ac = UIAlertController()
     
     var score = 0
     var correctAnswer = 0
@@ -31,8 +32,9 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .white
         setConstraints()
-        askQuestion()
+        askQuestion(action: nil)
         setBorders()
+        configureButtons()
     }
 }
 
@@ -71,7 +73,7 @@ extension ViewController {
         button3.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
-    func askQuestion() {
+    func askQuestion(action: UIAlertAction!) {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
         
@@ -89,5 +91,31 @@ extension ViewController {
         button2.layer.borderWidth = 1
         button3.layer.borderColor = UIColor.darkGray.cgColor
         button3.layer.borderWidth = 1
+    }
+    
+    func configureButtons() {
+        button1.tag = 0
+        button2.tag = 1
+        button3.tag = 2
+        
+        button1.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
+        button2.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
+        button3.addTarget(self, action: #selector(buttonTapped(sender:)), for: .touchUpInside)
+    }
+    
+    @objc func buttonTapped(sender: UIButton) {
+        if sender.tag == correctAnswer {
+            title = "Correct!"
+            score += 1
+//            print("A")
+        } else {
+            title = "Oops! try again!"
+            score -= 1
+//            print("B")
+        }
+        ac.title = title
+        ac.message = "Your score is \(score)"
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion(action:)))
+        present(ac, animated: true)
     }
 }
