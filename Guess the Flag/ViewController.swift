@@ -36,7 +36,6 @@ class ViewController: UIViewController {
     }
 }
 
-//MARK: set constraints
 extension ViewController {
     func setConstraints() {
         button1.translatesAutoresizingMaskIntoConstraints = false
