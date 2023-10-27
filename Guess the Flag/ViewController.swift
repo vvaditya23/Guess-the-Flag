@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     
     var score = 0
     var correctAnswer = 0
+    var numberOfQuestions = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,16 +117,25 @@ extension ViewController {
         if sender.tag == correctAnswer {
             title = "Correct!"
             score += 1
+            askQuestion(action: nil)
 //            print("A")
         } else {
             title = "Oops! try again!"
             score -= 1
+            ac.title = "That is incorrect!"
+            ac.message = "The ccorrect answer is \(countries[correctAnswer].uppercased())"
+            ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion(action:)))
+            present(ac, animated: true)
 //            print("B")
         }
+        numberOfQuestions += 1
+        if numberOfQuestions == 10 {
+            ac.title = "Game Over!"
+            ac.message = "Your final score is \(score)"
+            ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion(action:)))
+            present(ac, animated: true)
+            numberOfQuestions = 0
+        }
         scoreLabel.text = "Your current score is: \(score)"
-        ac.title = title
-        ac.message = "Your score is \(score)"
-        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion(action:)))
-        present(ac, animated: true)
     }
 }
