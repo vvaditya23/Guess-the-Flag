@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     let button2 = UIButton()
     let button3 = UIButton()
     let ac = UIAlertController()
+    let scoreLabel = UILabel()
     
     var score = 0
     var correctAnswer = 0
@@ -35,6 +36,7 @@ class ViewController: UIViewController {
         askQuestion(action: nil)
         setBorders()
         configureButtons()
+        scoreLabel.text = "Your current score is: \(score)"
     }
 }
 
@@ -71,6 +73,13 @@ extension ViewController {
         
         button3.topAnchor.constraint(equalTo: button2.bottomAnchor, constant: 20).isActive = true
         button3.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        view.addSubview(scoreLabel)
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scoreLabel.topAnchor.constraint(equalTo: button3.bottomAnchor,constant: 50),
+            scoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
     
     func askQuestion(action: UIAlertAction!) {
@@ -113,6 +122,7 @@ extension ViewController {
             score -= 1
 //            print("B")
         }
+        scoreLabel.text = "Your current score is: \(score)"
         ac.title = title
         ac.message = "Your score is \(score)"
         ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion(action:)))
